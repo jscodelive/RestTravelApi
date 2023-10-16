@@ -1,12 +1,10 @@
 package com.jscode.RestApi.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Entity(name = "hotel")
 @NoArgsConstructor
@@ -25,6 +23,16 @@ public class HotelEntity {
     private String address;
     private Integer rating;
     private BigDecimal price;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            orphanRemoval = true,
+            mappedBy = "hotel"
+    )
+    private Set<ReservationEntity> reservation;
 }
 
 
